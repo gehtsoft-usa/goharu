@@ -2,6 +2,7 @@ package goharu_test
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"testing"
 
@@ -23,5 +24,14 @@ func TestDebug(t *testing.T) {
 	f, _ := os.Create("test/test1.pdf")
 	defer f.Close()
 	f.Write(c)
+
+	var i goharu.Image
+
+	i = a.LoadPngImageFromFile("test/logo.png")
+	fmt.Printf("%d,%d\n", i.Width(), i.Height())
+
+	b, _ := ioutil.ReadFile("test/logo.png")
+	i = a.LoadPngImageFromMem(b)
+	fmt.Printf("%d,%d\n", i.Width(), i.Height())
 
 }
