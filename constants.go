@@ -709,3 +709,19 @@ const OSUBCLASS_EXT_GSTATE int = 0x0A00
 const OSUBCLASS_EXT_GSTATE_R int = 0x0B00 /* read only object */
 const OSUBCLASS_NAMEDICT int = 0x0C00
 const OSUBCLASS_NAMETREE int = 0x0D00
+
+type Rect struct {
+	Top, Bottom, Left, Right float32
+}
+
+type Point struct {
+	X, Y float32
+}
+
+type Point3D struct {
+	X, Y, Z float32
+}
+
+type TextWidth struct {
+	NumberOfCharacters, NumberOfWords, Width, NumSpace uint
+}

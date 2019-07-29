@@ -9,6 +9,7 @@ package goharu
 //#cgo linux,!android,arm32 LDFLAGS: -L${SRCDIR}/libharu/linux/arm32
 //#cgo linux,!android,arm64 LDFLAGS: -L${SRCDIR}/libharu/linux/arm64
 //#include <hpdf.h>
+//#include <hpdf_u3d.h>
 //extern void go_haru_error_callback(int error_no, int detail_no, int user_data);
 //static void my_haru_error_callback(int error_no, int detail_no, int user_data)
 //{
@@ -21,8 +22,10 @@ package goharu
 import (
 	"C"
 )
+
 import (
 	"fmt"
+	"time"
 	"unsafe"
 )
 
@@ -32,8 +35,8 @@ func Version() string {
 }
 
 //The structure represents the haru engine
-type Haru struct {
-	pdf C.HPDF_Doc
+type Doc struct {
+	ptr C.HPDF_Doc
 }
 
 //export go_haru_error_callback
@@ -42,80 +45,77 @@ func go_haru_error_callback(error_no, detail_no, user_data int32) {
 }
 
 //The function initializes the haru engine
-func Create() Haru {
-	var pdf C.HPDF_Doc
-	pdf = C.my_create()
-	return Haru{pdf: pdf}
+func Create() Doc {
+	var ptr C.HPDF_Doc
+	ptr = C.my_create()
+	return Doc{ptr: ptr}
 }
 
 //The function creates a new document
-func (v *Haru) NewDoc() {
-	C.HPDF_NewDoc(v.pdf)
+func (v *Doc) NewDoc() {
+	C.HPDF_NewDoc(v.ptr)
 }
 
 //The function frees the document
-func (v *Haru) FreeDoc() {
-	C.HPDF_FreeDoc(v.pdf)
+func (v *Doc) FreeDoc() {
+	C.HPDF_FreeDoc(v.ptr)
 }
 
 //The function frees the engine and all allocated resources
-func (v *Haru) Free() {
-	C.HPDF_Free(v.pdf)
+func (v *Doc) Free() {
+	C.HPDF_Free(v.ptr)
 }
 
 //Gets the content of the document as a byte array
-func (v *Haru) Content() []byte {
+func (v *Doc) Content() []byte {
 	var size C.uint
 	var sizePtr *C.uint = &size
-	C.HPDF_SaveToStream(v.pdf)
-	size = C.HPDF_GetStreamSize(v.pdf)
+	C.HPDF_SaveToStream(v.ptr)
+	size = C.HPDF_GetStreamSize(v.ptr)
 	buff := C.malloc(C.size_t(size))
 	defer C.free(buff)
-	C.HPDF_GetContents(v.pdf, (*C.uchar)(buff), sizePtr)
+	C.HPDF_GetContents(v.ptr, (*C.uchar)(buff), sizePtr)
 	return C.GoBytes(buff, C.int(size))
 }
 
 //Saves the content of the document to the file specified
-func (v *Haru) Save(name string) {
+func (v *Doc) Save(name string) {
 	_name := C.CString(name)
 	defer C.free(unsafe.Pointer(_name))
-	C.HPDF_SaveToFile(v.pdf, _name)
+	C.HPDF_SaveToFile(v.ptr, _name)
 }
 
-//Loads a PNG image from the file
-func (v *Haru) LoadPngImageFromFile(name string) Image {
-	_name := C.CString(name)
-	defer C.free(unsafe.Pointer(_name))
-	image := C.HPDF_LoadPngImageFromFile(v.pdf, _name)
-	return Image{ptr: image}
+const INFO_CREATION_DATE int = 0
+const INFO_MOD_DATE int = 1
+
+func (v *Doc) SetInfoAttrDate(attr int, t time.Time) {
+	var ht C.struct__HPDF_Date
+	ht = C.struct__HPDF_Date{
+		year:    C.int(t.Year()),
+		month:   C.int(t.Month()),
+		day:     C.int(t.Day()),
+		hour:    C.int(t.Hour()),
+		minutes: C.int(t.Minute()),
+	}
+	C.HPDF_SetInfoDateAttr(v.ptr, C.HPDF_InfoType(attr), ht)
 }
 
-//Loads a PNG image from the memory
-func (v *Haru) LoadPngImageFromMem(raw []byte) Image {
-	image := C.HPDF_LoadPngImageFromMem(v.pdf, (*C.uchar)(unsafe.Pointer(&raw[0])), C.uint(len(raw)))
-	return Image{ptr: image}
+const INFO_AUTHOR int = 2
+const INFO_CREATOR int = 3
+const INFO_PRODUCER int = 4
+const INFO_TITLE int = 5
+const INFO_SUBJECT int = 6
+const INFO_KEYWORDS int = 7
+const INFO_TRAPPED int = 8
+const INFO_GTS_PDF_X int = 9
+const INFO_EOF int = 10
+
+func (v *Doc) SetInfoAttrString(attr int, value string) {
+	_value := C.CString(value)
+	defer C.free(unsafe.Pointer(_value))
+	C.HPDF_SetInfoAttr(v.ptr, C.HPDF_InfoType(attr), _value)
 }
 
-//Loads a PNG image from the file
-//
-//The image isn't actually loaded until it is used in the document
-func (v *Haru) LoadPngImageFromFile2(name string) Image {
-	_name := C.CString(name)
-	defer C.free(unsafe.Pointer(_name))
-	image := C.HPDF_LoadPngImageFromFile2(v.pdf, _name)
-	return Image{ptr: image}
-}
-
-//Loads a Jpeg image from the file
-func (v *Haru) LoadJpegImageFromFile(name string) Image {
-	_name := C.CString(name)
-	defer C.free(unsafe.Pointer(_name))
-	image := C.HPDF_LoadJpegImageFromFile(v.pdf, _name)
-	return Image{ptr: image}
-}
-
-//Loads a Jpeg image from the memory
-func (v *Haru) LoadJpegImageFromMem(raw []byte) Image {
-	image := C.HPDF_LoadJpegImageFromMem(v.pdf, (*C.uchar)(unsafe.Pointer(&raw[0])), C.uint(len(raw)))
-	return Image{ptr: image}
+func (v *Doc) GetInfoAttr(attr int) string {
+	return C.GoString(C.HPDF_GetInfoAttr(v.ptr, C.HPDF_InfoType(attr)))
 }
