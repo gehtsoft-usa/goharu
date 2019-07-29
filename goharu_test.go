@@ -14,7 +14,7 @@ func TestVersion(t *testing.T) {
 }
 
 func TestDebug(t *testing.T) {
-	a := goharu.Create()
+	a := goharu.Create(true)
 	defer a.Free()
 	a.NewDoc()
 	defer a.FreeDoc()

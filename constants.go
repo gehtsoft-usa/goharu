@@ -710,18 +710,8 @@ const OSUBCLASS_EXT_GSTATE_R int = 0x0B00 /* read only object */
 const OSUBCLASS_NAMEDICT int = 0x0C00
 const OSUBCLASS_NAMETREE int = 0x0D00
 
-type Rect struct {
-	Top, Bottom, Left, Right float32
-}
-
-type Point struct {
-	X, Y float32
-}
-
-type Point3D struct {
-	X, Y, Z float32
-}
-
-type TextWidth struct {
-	NumberOfCharacters, NumberOfWords, Width, NumSpace uint
-}
+const BS_SOLID int = 0
+const BS_DASHED int = 1
+const BS_BEVELED int = 2
+const BS_INSET int = 3
+const BS_UNDERLINED int = 4

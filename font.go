@@ -65,6 +65,11 @@ func (pdf *Doc) LoadTTFontFromFile2(file_name string, index uint, embedding bool
 	return C.GoString(rc)
 }
 
+func (pdf *Doc) UseJPFonts() {
+
+	C.HPDF_UseJPFonts(pdf.ptr)
+}
+
 func (pdf *Doc) UseKRFonts() {
 
 	C.HPDF_UseKRFonts(pdf.ptr)
