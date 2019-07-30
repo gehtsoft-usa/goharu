@@ -14,10 +14,15 @@ func (pdf *Doc) GetFont(font_name string, encoding_name string) Font {
 	_font_name := C.CString(font_name)
 	defer C.free(unsafe.Pointer(_font_name))
 
-	_encoding_name := C.CString(encoding_name)
-	defer C.free(unsafe.Pointer(_encoding_name))
-	rc := C.HPDF_GetFont(pdf.ptr, _font_name, _encoding_name)
-
+	var _encoding_name *C.char
+	var rc C.HPDF_Font
+	if len(encoding_name) > 0 {
+		_encoding_name = C.CString(encoding_name)
+		defer C.free(unsafe.Pointer(_encoding_name))
+		rc = C.HPDF_GetFont(pdf.ptr, _font_name, _encoding_name)
+	} else {
+		rc = C.HPDF_GetFont(pdf.ptr, _font_name, nil)
+	}
 	return Font{ptr: rc}
 }
 

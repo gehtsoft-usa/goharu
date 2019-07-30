@@ -76,3 +76,11 @@ func (i *Image) SetColorMask(redmin, redmax, greenmin, greenmax, bluemin, bluema
 func (i *Image) SetImageMask(mask *Image) {
 	C.HPDF_Image_SetMaskImage(i.ptr, mask.ptr)
 }
+
+func (i *Image) AddSMask(mask *Image) {
+	C.HPDF_Image_AddSMask(i.ptr, mask.ptr)
+}
+
+func (i *Image) GetColorSpace() string {
+	return C.GoString(C.HPDF_Image_GetColorSpace(i.ptr))
+}

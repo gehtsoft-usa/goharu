@@ -194,3 +194,13 @@ func (pdf *Doc) AttachFile(file string) {
 	defer C.free(unsafe.Pointer(_file))
 	C.HPDF_AttachFile(pdf.ptr, _file)
 }
+
+type OutputIntent struct {
+	ptr C.HPDF_OutputIntent
+}
+
+func (pdf *Doc) LoadIccProfileFromFile(icc_file_name string, numComponent int) OutputIntent {
+	_icc_file_name := C.CString(icc_file_name)
+	defer C.free(unsafe.Pointer(_icc_file_name))
+	return OutputIntent{ptr: C.HPDF_LoadIccProfileFromFile(pdf.ptr, _icc_file_name, C.int(numComponent))}
+}

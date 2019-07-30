@@ -543,3 +543,23 @@ const TS_EOF int = 17
 func (page *Page) SetSlideShow(slideShowType int, disp_time float32, trans_time float32) {
 	C.HPDF_Page_SetSlideShow(page.ptr, C.HPDF_TransitionStyle(slideShowType), C.float(disp_time), C.float(trans_time))
 }
+
+const PAGE_SIZE_LETTER int = 0
+const PAGE_SIZE_LEGAL int = 1
+const PAGE_SIZE_A3 int = 2
+const PAGE_SIZE_A4 int = 3
+const PAGE_SIZE_A5 int = 4
+const PAGE_SIZE_B4 int = 5
+const PAGE_SIZE_B5 int = 6
+const PAGE_SIZE_EXECUTIVE int = 7
+const PAGE_SIZE_US4x6 int = 8
+const PAGE_SIZE_US4x8 int = 9
+const PAGE_SIZE_US5x7 int = 10
+const PAGE_SIZE_COMM10 int = 11
+
+const PAGE_PORTRAIT int = 0
+const PAGE_LANDSCAPE int = 1
+
+func (page *Page) SetSize(size int, orientation int) {
+	C.HPDF_Page_SetSize(page.ptr, C.HPDF_PageSizes(size), C.HPDF_PageDirection(orientation))
+}
