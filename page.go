@@ -563,3 +563,100 @@ const PAGE_LANDSCAPE int = 1
 func (page *Page) SetSize(size int, orientation int) {
 	C.HPDF_Page_SetSize(page.ptr, C.HPDF_PageSizes(size), C.HPDF_PageDirection(orientation))
 }
+
+func (page *Page) TextWidth1(text string, encoding string) (float32, error) {
+	v, _, e := CEncodedString(text, encoding)
+	if e != nil {
+		return 0, e
+	}
+	defer C.free(unsafe.Pointer(v))
+	return float32(C.HPDF_Page_TextWidth(page.ptr, v)), nil
+}
+
+func (page *Page) MeasureText1(text string, encoding string, width float32, wordwrap bool) (uint, float32, error) {
+	v, _, e := CEncodedString(text, encoding)
+	if e != nil {
+		return 0, 0, e
+	}
+	defer C.free(unsafe.Pointer(v))
+
+	var _wordwrap C.int
+	if wordwrap {
+		_wordwrap = C.HPDF_TRUE
+	} else {
+		_wordwrap = C.HPDF_FALSE
+	}
+	var _real_width C.float = 0
+
+	rc := uint(C.HPDF_Page_MeasureText(page.ptr, v, C.float(width), _wordwrap, &_real_width))
+	return rc, float32(_real_width), nil
+}
+
+func (page *Page) ShowText1(text string, encoding string) error {
+	v, _, e := CEncodedString(text, encoding)
+	if e != nil {
+		return e
+	}
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_ShowText(page.ptr, v)
+	return nil
+}
+
+func (page *Page) ShowTextNextLine1(text string, encoding string) error {
+	v, _, e := CEncodedString(text, encoding)
+	if e != nil {
+		return e
+	}
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_ShowTextNextLine(page.ptr, v)
+	return nil
+}
+
+func (page *Page) ShowTextNextLineEx1(word_space float32, char_space float32, text string, encoding string) error {
+	v, _, e := CEncodedString(text, encoding)
+	if e != nil {
+		return e
+	}
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_ShowTextNextLineEx(page.ptr, C.float(word_space), C.float(char_space), v)
+	return nil
+}
+
+func (page *Page) TextWidth2(text []byte) float32 {
+	v := BufferToASCIZ(text)
+	defer C.free(unsafe.Pointer(v))
+	return float32(C.HPDF_Page_TextWidth(page.ptr, v))
+}
+
+func (page *Page) MeasureText2(text []byte, width float32, wordwrap bool) (uint, float32) {
+	v := BufferToASCIZ(text)
+	defer C.free(unsafe.Pointer(v))
+	var _wordwrap C.int
+	if wordwrap {
+		_wordwrap = C.HPDF_TRUE
+	} else {
+		_wordwrap = C.HPDF_FALSE
+	}
+	var _real_width C.float = 0
+
+	rc := uint(C.HPDF_Page_MeasureText(page.ptr, v, C.float(width), _wordwrap, &_real_width))
+	return rc, float32(_real_width)
+}
+
+func (page *Page) ShowText2(text []byte) {
+	v := BufferToASCIZ(text)
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_ShowText(page.ptr, v)
+}
+
+func (page *Page) ShowTextNextLine2(text []byte) {
+	v := BufferToASCIZ(text)
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_ShowTextNextLine(page.ptr, v)
+}
+
+func (page *Page) ShowTextNextLineEx2(word_space float32, char_space float32, text []byte) {
+	v := BufferToASCIZ(text)
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_ShowTextNextLineEx(page.ptr, C.float(word_space), C.float(char_space), v)
+}

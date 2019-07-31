@@ -153,18 +153,27 @@ func (font *Font) GetCapHeight() uint {
 }
 
 func (font *Font) TextWidth(text string, len uint) TextWidth {
-
 	_text := (*C.uchar)(unsafe.Pointer(C.CString(text)))
 	defer C.free(unsafe.Pointer(_text))
-
 	rc := C.HPDF_Font_TextWidth(font.ptr, _text, C.uint(len))
 	return TextWidth{NumberOfCharacters: uint(rc.numchars), NumberOfWords: uint(rc.numwords), Width: uint(rc.width), NumSpace: uint(rc.numspace)}
-
 }
 
 func (font *Font) TextWidthEncoded(text []byte, len uint) TextWidth {
-
 	_text := (*C.uchar)(unsafe.Pointer(&text[0]))
+	return font.textWidthEncoded(_text, len)
+}
+
+func (font *Font) TextWidthEncoded1(text string, encoding string) (TextWidth, error) {
+	v, l, e := CEncodedString(text, encoding)
+	if e != nil {
+		return TextWidth{}, e
+	}
+	defer C.free(unsafe.Pointer(v))
+	return font.textWidthEncoded((*C.uchar)(unsafe.Pointer(v)), uint(l)), nil
+}
+
+func (font *Font) textWidthEncoded(_text *C.uchar, len uint) TextWidth {
 	rc := C.HPDF_Font_TextWidth(font.ptr, _text, C.uint(len))
 	return TextWidth{NumberOfCharacters: uint(rc.numchars), NumberOfWords: uint(rc.numwords), Width: uint(rc.width), NumSpace: uint(rc.numspace)}
 }
@@ -188,13 +197,27 @@ func (font *Font) MeasureText(text string, len uint, width float32, font_size fl
 }
 
 func (font *Font) MeasureTextEncoded(text []byte, len uint, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32) {
+	_text := (*C.uchar)(unsafe.Pointer(&text[0]))
+	return font.measureTextEncoded(_text, len, width, font_size, char_space, word_space, wordwrap)
+}
+
+func (font *Font) MeasureTextEncoded1(text string, encoding string, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32, error) {
+	v, l, e := CEncodedString(text, encoding)
+	if e != nil {
+		return 0, 0, e
+	}
+	defer C.free(unsafe.Pointer(v))
+	a, b := font.measureTextEncoded((*C.uchar)(unsafe.Pointer(v)), uint(l), width, font_size, char_space, word_space, wordwrap)
+	return a, b, nil
+}
+
+func (font *Font) measureTextEncoded(_text *C.uchar, len uint, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32) {
 	var _wordwrap C.int
 	if wordwrap {
 		_wordwrap = C.HPDF_TRUE
 	} else {
 		_wordwrap = C.HPDF_FALSE
 	}
-	_text := (*C.uchar)(unsafe.Pointer(&text[0]))
 
 	var realwidth C.float
 	rc := C.HPDF_Font_MeasureText(font.ptr, _text, C.uint(len), C.float(width), C.float(font_size), C.float(char_space), C.float(word_space), _wordwrap, &realwidth)
