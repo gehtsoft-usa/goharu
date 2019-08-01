@@ -9,5 +9,7 @@ func Help() {
 	fmt.Printf("  arcdemo\n")
 	fmt.Printf("  fontdemo\n")
 	fmt.Printf("  encryptiondemo\n")
+	fmt.Printf("  encodings\n")
+	fmt.Printf("  cp1251\n")
 
 }

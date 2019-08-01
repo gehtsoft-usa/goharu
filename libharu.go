@@ -154,7 +154,7 @@ func (v *Doc) GetInfoAttr(attr int) string {
 //Sets compression mode
 //
 //The mode may be any COMP_* value except COMP_MASK
-func (pdf *Doc) SetCompressionMode(mode uint) {
+func (pdf *Doc) SetCompressionMode(mode int) {
 	C.HPDF_SetCompressionMode(pdf.ptr, C.uint(mode))
 }
 

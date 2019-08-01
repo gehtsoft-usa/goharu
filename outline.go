@@ -17,7 +17,7 @@ func (pdf *Doc) CreateOutline(parent Outline, title string, encoder Encoder) Out
 	return Outline{ptr: rc}
 }
 
-func (outline *Outline) Outline_SetOpened(opened bool) {
+func (outline *Outline) SetOpened(opened bool) {
 	var _opened C.int
 	if opened {
 		_opened = C.HPDF_TRUE
@@ -28,7 +28,7 @@ func (outline *Outline) Outline_SetOpened(opened bool) {
 	C.HPDF_Outline_SetOpened(outline.ptr, _opened)
 }
 
-func (outline *Outline) Outline_SetDestination(dst Destination) {
+func (outline *Outline) SetDestination(dst Destination) {
 
 	C.HPDF_Outline_SetDestination(outline.ptr, dst.ptr)
 }

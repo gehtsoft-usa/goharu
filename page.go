@@ -573,6 +573,16 @@ func (page *Page) TextWidth1(text string, encoding string) (float32, error) {
 	return float32(C.HPDF_Page_TextWidth(page.ptr, v)), nil
 }
 
+func (page *Page) TextOut1(xpos float32, ypos float32, text string, encoding string) error {
+	v, _, e := CEncodedString(text, encoding)
+	if e != nil {
+		return e
+	}
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_TextOut(page.ptr, C.float(xpos), C.float(ypos), v)
+	return nil
+}
+
 func (page *Page) MeasureText1(text string, encoding string, width float32, wordwrap bool) (uint, float32, error) {
 	v, _, e := CEncodedString(text, encoding)
 	if e != nil {
@@ -626,6 +636,12 @@ func (page *Page) TextWidth2(text []byte) float32 {
 	v := BufferToASCIZ(text)
 	defer C.free(unsafe.Pointer(v))
 	return float32(C.HPDF_Page_TextWidth(page.ptr, v))
+}
+
+func (page *Page) TextOut2(xpos float32, ypos float32, text []byte) {
+	v := BufferToASCIZ(text)
+	defer C.free(unsafe.Pointer(v))
+	C.HPDF_Page_TextOut(page.ptr, C.float(xpos), C.float(ypos), v)
 }
 
 func (page *Page) MeasureText2(text []byte, width float32, wordwrap bool) (uint, float32) {
