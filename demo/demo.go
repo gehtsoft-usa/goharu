@@ -10,13 +10,13 @@ func main() {
 	var i int
 	for i = 1; i < len(os.Args); i++ {
 		switch os.Args[i] {
-		case "fontdemo":
+		case "font":
 			demo.Fontdemo()
 			break
-		case "arcdemo":
+		case "arc":
 			demo.Arcdemo()
 			break
-		case "encryptiondemo":
+		case "encrypt":
 			demo.Encryptiondemo()
 			break
 		case "encodings":
@@ -24,6 +24,15 @@ func main() {
 			break
 		case "cp1251":
 			demo.Cp1251Demo()
+			break
+		case "jp":
+			demo.JpDemo()
+			break
+		case "png":
+			demo.Pngdemo()
+			break
+		case "jpg":
+			demo.Jpgdemo()
 			break
 		case "help":
 			demo.Help()
