@@ -34,6 +34,9 @@ func main() {
 		case "jpg":
 			demo.Jpgdemo()
 			break
+		case "text":
+			demo.Textdemo()
+			break
 		case "help":
 			demo.Help()
 			break

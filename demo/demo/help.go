@@ -14,5 +14,6 @@ func Help() {
 	fmt.Printf("  png\n")
 	fmt.Printf("  jpg\n")
 	fmt.Printf("  jp\n")
+	fmt.Printf("  text\n")
 
 }

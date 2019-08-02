@@ -413,6 +413,7 @@ func (page *Page) SetFontAndSize(font Font, size float32) {
 	C.HPDF_Page_SetFontAndSize(page.ptr, font.ptr, C.float(size))
 }
 
+//TEXT_RENDER_*
 func (page *Page) SetTextRenderingMode(mode int) {
 	C.HPDF_Page_SetTextRenderingMode(page.ptr, C.HPDF_TextRenderingMode(mode))
 }
