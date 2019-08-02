@@ -1,8 +1,8 @@
 # What is GoHaru? 
 
-GoHaru is an interop module for the libharu PDF generation library (http://libharu.org/)
+GoHaru is another Go interop module for libharu PDF generation library (http://libharu.org/)
 
-What Makes it Different? 
+What Makes it Different from others? 
 
 1) The package includes prebuild static libraries for 32 and 64 bit Windows, 32 and 64 ARM, 64 bit Intel Linux, and 64 bit MacOS. 
 
