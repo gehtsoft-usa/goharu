@@ -56,22 +56,27 @@
         "Tsonga",
         "Volapuk",
         "Zapf",
+        "abcdefg",
         "exdata",
         "goharu",
         "horz",
         "hpdf",
+        "jpgdemo",
         "lharu",
         "libharu",
         "liconv",
         "macos",
+        "mbcs",
         "memcpy",
         "mmgr",
         "passwd",
         "pdfa",
+        "pngdemo",
         "ushort",
         "xpos",
         "xray",
         "ypos",
         "yray"
-    ]
+    ],
+    "go.lintOnSave": "off"
 }
