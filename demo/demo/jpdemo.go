@@ -21,7 +21,7 @@ func JpDemo() {
 	if err != nil {
 		text = []byte("Can't read text")
 	}
-	page.SetSize(goharu.PAGE_SIZE_LETTER, goharu.PAGE_LANDSCAPE)
+	page.SetSize(goharu.PageSizeLetter, goharu.PageLandscape)
 	page.BeginText()
 	page.SetFontAndSize(font, 10)
 	tw := page.TextWidth2(text)

@@ -41,8 +41,8 @@ func Encodings() {
 		"ZapfDingbats-Set",
 	}
 
-	pdf.SetCompressionMode(goharu.COMP_ALL)
-	pdf.SetPageMode(goharu.PAGE_MODE_USE_OUTLINE)
+	pdf.SetCompressionMode(goharu.CompAll)
+	pdf.SetPageMode(goharu.PageModeUseOutline)
 
 	font := pdf.GetFont("Helvetica", "")
 

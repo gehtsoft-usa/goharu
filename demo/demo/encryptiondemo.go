@@ -13,7 +13,7 @@ func Encryptiondemo() {
 	page := pdf.AddPage()
 	font := pdf.GetFont("Helvetica", "")
 	text := "This is an encrypted document example."
-	page.SetSize(goharu.PAGE_SIZE_B5, goharu.PAGE_LANDSCAPE)
+	page.SetSize(goharu.PageSizeB5, goharu.PageLandscape)
 	page.BeginText()
 	page.SetFontAndSize(font, 20)
 	tw := page.TextWidth(text)

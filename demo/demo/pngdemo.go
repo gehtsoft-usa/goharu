@@ -10,7 +10,7 @@ func Pngdemo() {
 	pdf.NewDoc()
 	defer pdf.FreeDoc()
 
-	pdf.SetCompressionMode(goharu.COMP_ALL)
+	pdf.SetCompressionMode(goharu.CompAll)
 	font := pdf.GetFont("Helvetica", "")
 
 	page := pdf.AddPage()

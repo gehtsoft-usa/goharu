@@ -115,21 +115,21 @@ func Textdemo() {
 
 	/* PDF_FILL */
 	showDescription(page, 60, ypos, "RenderingMode=PDF_FILL")
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_FILL)
+	page.SetTextRenderingMode(goharu.TextRenderFill)
 	page.BeginText()
 	page.TextOut(60, ypos, "ABCabc123")
 	page.EndText()
 
 	/* PDF_STROKE */
 	showDescription(page, 60, ypos-50, "RenderingMode=PDF_STROKE")
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_STROKE)
+	page.SetTextRenderingMode(goharu.TextRenderStroke)
 	page.BeginText()
 	page.TextOut(60, ypos-50, "ABCabc123")
 	page.EndText()
 
 	/* PDF_FILL_THEN_STROKE */
 	showDescription(page, 60, ypos-100, "RenderingMode=PDF_FILL_THEN_STROKE")
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_FILL_THEN_STROKE)
+	page.SetTextRenderingMode(goharu.TextRenderFillThenStroke)
 	page.BeginText()
 	page.TextOut(60, ypos-100, "ABCabc123")
 	page.EndText()
@@ -137,7 +137,7 @@ func Textdemo() {
 	/* PDF_FILL_CLIPPING */
 	showDescription(page, 60, ypos-150, "RenderingMode=PDF_FILL_CLIPPING")
 	page.GSave()
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_FILL_CLIPPING)
+	page.SetTextRenderingMode(goharu.TextRenderFillClipping)
 	page.BeginText()
 	page.TextOut(60, ypos-150, "ABCabc123")
 	page.EndText()
@@ -147,7 +147,7 @@ func Textdemo() {
 	/* PDF_STROKE_CLIPPING */
 	showDescription(page, 60, ypos-200, "RenderingMode=PDF_STROKE_CLIPPING")
 	page.GSave()
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_STROKE_CLIPPING)
+	page.SetTextRenderingMode(goharu.TextRenderStrokeClipping)
 	page.BeginText()
 	page.TextOut(60, ypos-200, "ABCabc123")
 	page.EndText()
@@ -157,7 +157,7 @@ func Textdemo() {
 	/* PDF_FILL_STROKE_CLIPPING */
 	showDescription(page, 60, ypos-250, "RenderingMode=PDF_FILL_STROKE_CLIPPING")
 	page.GSave()
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_FILL_STROKE_CLIPPING)
+	page.SetTextRenderingMode(goharu.TextRenderFillStrokeClipping)
 	page.BeginText()
 	page.TextOut(60, ypos-250, "ABCabc123")
 	page.EndText()
@@ -165,7 +165,7 @@ func Textdemo() {
 	page.GRestore()
 
 	/* Reset text attributes */
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_FILL)
+	page.SetTextRenderingMode(goharu.TextRenderFill)
 	page.SetRGBFill(goharu.RGBColor{R: 0, G: 0, B: 0})
 	page.SetFontAndSize(font, 30)
 
@@ -245,7 +245,7 @@ func Textdemo() {
 	page.EndText()
 
 	page = pdf.AddPage()
-	page.SetSize(goharu.PAGE_SIZE_A5, goharu.PAGE_PORTRAIT)
+	page.SetSize(goharu.PageSizeA5, goharu.PagePortrait)
 	printGrid(pdf, page)
 
 	/* text_rect method */
@@ -263,7 +263,7 @@ func Textdemo() {
 	page.SetFontAndSize(font, 10)
 	page.TextOut(rect.Left, rect.Top+3, "TEXT_ALIGN_LEFT")
 	page.SetFontAndSize(font, 13)
-	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TEXT_ALIGN_LEFT)
+	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TextAlignLeft)
 	page.EndText()
 
 	/* ALIGN_RIGHT */
@@ -276,7 +276,7 @@ func Textdemo() {
 	page.TextOut(rect.Left, rect.Top+3, "TEXT_ALIGN_RIGHT")
 
 	page.SetFontAndSize(font, 13)
-	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TEXT_ALIGN_RIGHT)
+	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TextAlignRight)
 	page.EndText()
 
 	/* ALIGN_CENTER */
@@ -292,7 +292,7 @@ func Textdemo() {
 	page.TextOut(rect.Left, rect.Top+3, "TEXT_ALIGN_CENTER")
 
 	page.SetFontAndSize(font, 13)
-	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TEXT_ALIGN_CENTER)
+	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TextAlignCenter)
 	page.EndText()
 
 	/* ALIGN_JUSTIFY */
@@ -306,7 +306,7 @@ func Textdemo() {
 	page.TextOut(rect.Left, rect.Top+3, "TEXT_ALIGN_JUSTIFY")
 
 	page.SetFontAndSize(font, 13)
-	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TEXT_ALIGN_JUSTIFY)
+	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TextAlignJustify)
 	page.EndText()
 
 	/* Skewed coordinate system */
@@ -329,7 +329,7 @@ func Textdemo() {
 	page.SetFontAndSize(font, 10)
 	page.TextOut(rect.Left, rect.Top+3, "Skewed coordinate system")
 	page.SetFontAndSize(font, 13)
-	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TEXT_ALIGN_LEFT)
+	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TextAlignLeft)
 	page.EndText()
 	page.GRestore()
 
@@ -350,7 +350,7 @@ func Textdemo() {
 	page.SetFontAndSize(font, 10)
 	page.TextOut(rect.Left, rect.Top+3, "Rotated coordinate system")
 	page.SetFontAndSize(font, 13)
-	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TEXT_ALIGN_LEFT)
+	page.TextRect(rect.Left, rect.Top, rect.Right, rect.Bottom, sampleText2, goharu.TextAlignLeft)
 	page.EndText()
 	page.GRestore()
 
@@ -407,7 +407,7 @@ func showDescription(page goharu.Page, x float32, y float32, text string) {
 
 	page.BeginText()
 	page.SetRGBFill(goharu.RGBColor{R: 0, G: 0, B: 0})
-	page.SetTextRenderingMode(goharu.TEXT_RENDER_FILL)
+	page.SetTextRenderingMode(goharu.TextRenderFill)
 	page.SetFontAndSize(font, 10)
 	page.TextOut(x, y-12, text)
 	page.EndText()

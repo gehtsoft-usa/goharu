@@ -18,7 +18,7 @@ func Cp1251Demo() {
 	if err != nil {
 		text = []byte("Can't read text")
 	}
-	page.SetSize(goharu.PAGE_SIZE_LETTER, goharu.PAGE_LANDSCAPE)
+	page.SetSize(goharu.PageSizeLetter, goharu.PageLandscape)
 	page.BeginText()
 	page.SetFontAndSize(font, 10)
 	tw := page.TextWidth2(text)
@@ -28,7 +28,7 @@ func Cp1251Demo() {
 
 	page = pdf.AddPage()
 	text1 := "Травка зеленеет, Солнышко блестит, Ласточка с весною, В гости к нам летит"
-	page.SetSize(goharu.PAGE_SIZE_LETTER, goharu.PAGE_LANDSCAPE)
+	page.SetSize(goharu.PageSizeLegal, goharu.PageLandscape)
 	page.BeginText()
 	page.SetFontAndSize(font, 10)
 	tw, _ = page.TextWidth1(text1, "CP1251")
