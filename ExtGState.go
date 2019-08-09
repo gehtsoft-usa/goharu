@@ -4,42 +4,60 @@ package goharu
 //#include <hpdf.h>
 import "C"
 
-//The structure represents an image
+//ExtGState struct
 type ExtGState struct {
 	ptr C.HPDF_ExtGState
 }
 
+//CreateExtGState create G-state
 func (pdf *Doc) CreateExtGState() ExtGState {
 	return ExtGState{ptr: C.HPDF_CreateExtGState(pdf.ptr)}
 }
 
+//SetAlphaStroke sets alpha stroke
 func (ext_gstate *ExtGState) SetAlphaStroke(value float32) {
 	C.HPDF_ExtGState_SetAlphaStroke(ext_gstate.ptr, C.float(value))
 }
 
+//SetAlphaFill sets alpha fill
 func (ext_gstate *ExtGState) SetAlphaFill(value float32) {
 	C.HPDF_ExtGState_SetAlphaFill(ext_gstate.ptr, C.float(value))
 }
 
-const BM_NORMAL int = 0
-const BM_MULTIPLY int = 1
-const BM_SCREEN int = 2
-const BM_OVERLAY int = 3
-const BM_DARKEN int = 4
-const BM_LIGHTEN int = 5
-const BM_COLOR_DODGE int = 6
-const BM_COLOR_BUM int = 7
-const BM_HARD_LIGHT int = 8
-const BM_SOFT_LIGHT int = 9
-const BM_DIFFERENCE int = 10
-const BM_EXCLUSHON int = 11
-const BM_EOF int = 12
+//BmNormal is blending mode constant
+const BmNormal int = 0 
+//BmMultiply is blending mode constant
+const BmMultiply int = 1 
+//BmScreen is blending mode constant
+const BmScreen int = 2 
+//BmOverlay is blending mode constant
+const BmOverlay int = 3 
+//BmDarken is blending mode constant
+const BmDarken int = 4 
+//BmLighten is blending mode constant
+const BmLighten int = 5 
+//BmColorDodge is blending mode constant
+const BmColorDodge int = 6 
+//BmColorBum is blending mode constant
+const BmColorBum int = 7 
+//BmHardLight is blending mode constant
+const BmHardLight int = 8 
+//BmSoftLight is blending mode constant
+const BmSoftLight int = 9 
+//BmDifference is blending mode constant
+const BmDifference int = 10 
+//BmExclushon is blending mode constant
+const BmExclushon int = 11 
 
+//SetBlendMode sets blending mode
+//
+//Use Bm* value as the parameter
 func (ext_gstate *ExtGState) SetBlendMode(mode int) {
 
 	C.HPDF_ExtGState_SetBlendMode(ext_gstate.ptr, C.HPDF_BlendMode(mode))
 }
 
-func (page *Page) Page_SetExtGState(ext_gstate ExtGState) {
-	C.HPDF_Page_SetExtGState(page.ptr, ext_gstate.ptr)
+//SetExtGState applies the graphics state to the page.
+func (page *Page) SetExtGState(gstate ExtGState) {
+	C.HPDF_Page_SetExtGState(page.ptr, gstate.ptr)
 }

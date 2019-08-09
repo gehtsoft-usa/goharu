@@ -4,7 +4,7 @@ package goharu
 //#include <hpdf.h>
 import "C"
 
-//The structure represents an image
+//ExData struct
 type ExData struct {
 	ptr C.HPDF_ExData
 }

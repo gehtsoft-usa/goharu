@@ -6,11 +6,12 @@ package goharu
 import "C"
 import "unsafe"
 
-//The structure represents an image
+//JavaScript structure keeps information about a JavaScript
 type JavaScript struct {
 	ptr C.HPDF_Dict
 }
 
+//LoadJavaScriptFromFile loads JavaScript from a file
 func (v *Doc) LoadJavaScriptFromFile(filename string) JavaScript {
 	_filename := C.CString(filename)
 	defer C.free(unsafe.Pointer(_filename))
@@ -18,6 +19,7 @@ func (v *Doc) LoadJavaScriptFromFile(filename string) JavaScript {
 	return JavaScript{ptr: ptr}
 }
 
+//CreateJavaScript creates JavaScript using the source code
 func (v *Doc) CreateJavaScript(code string) JavaScript {
 	_code := C.CString(code)
 	defer C.free(unsafe.Pointer(_code))

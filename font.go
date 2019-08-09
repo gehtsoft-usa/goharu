@@ -5,90 +5,99 @@ package goharu
 import "C"
 import "unsafe"
 
-//The structure represents an image
+//Font struct keeps font reference
 type Font struct {
 	ptr C.HPDF_Font
 }
 
-func (pdf *Doc) GetFont(font_name string, encoding_name string) Font {
-	_font_name := C.CString(font_name)
-	defer C.free(unsafe.Pointer(_font_name))
+//GetFont gets font by the name and encoding
+func (pdf *Doc) GetFont(fontName string, encodingName string) Font {
+	cFontName := C.CString(fontName)
+	defer C.free(unsafe.Pointer(cFontName))
 
-	var _encoding_name *C.char
+	var cEncodingName *C.char
 	var rc C.HPDF_Font
-	if len(encoding_name) > 0 {
-		_encoding_name = C.CString(encoding_name)
-		defer C.free(unsafe.Pointer(_encoding_name))
-		rc = C.HPDF_GetFont(pdf.ptr, _font_name, _encoding_name)
+	if len(encodingName) > 0 {
+		cEncodingName = C.CString(encodingName)
+		defer C.free(unsafe.Pointer(cEncodingName))
+		rc = C.HPDF_GetFont(pdf.ptr, cFontName, cEncodingName)
 	} else {
-		rc = C.HPDF_GetFont(pdf.ptr, _font_name, nil)
+		rc = C.HPDF_GetFont(pdf.ptr, cFontName, nil)
 	}
 	return Font{ptr: rc}
 }
 
-func (pdf *Doc) LoadType1FontFromFile(afm_file_name string, data_file_name string) string {
+//LoadType1FontFromFile loads a Type1 font from an external file and registers it in the document object. (See "Fonts and Encodings")
+func (pdf *Doc) LoadType1FontFromFile(afmFileName string, dataFileName string) string {
 
-	_afm_file_name := C.CString(afm_file_name)
-	defer C.free(unsafe.Pointer(_afm_file_name))
+	cAfmFileName := C.CString(afmFileName)
+	defer C.free(unsafe.Pointer(cAfmFileName))
 
-	_data_file_name := C.CString(data_file_name)
-	defer C.free(unsafe.Pointer(_data_file_name))
-	rc := C.HPDF_LoadType1FontFromFile(pdf.ptr, _afm_file_name, _data_file_name)
+	cDataFileName := C.CString(dataFileName)
+	defer C.free(unsafe.Pointer(cDataFileName))
+	rc := C.HPDF_LoadType1FontFromFile(pdf.ptr, cAfmFileName, cDataFileName)
 
 	return C.GoString(rc)
 
 }
 
-func (pdf *Doc) LoadTTFontFromFile(file_name string, embedding bool) string {
+//LoadTTFontFromFile loads a TrueType font from an external file and register it to a document object. (See "Fonts and Encodings")
+func (pdf *Doc) LoadTTFontFromFile(filename string, embedding bool) string {
 
-	_file_name := C.CString(file_name)
-	defer C.free(unsafe.Pointer(_file_name))
-	var _embedding C.int
+	cFileName := C.CString(filename)
+	defer C.free(unsafe.Pointer(cFileName))
+	var cEmbedding C.int
 	if embedding {
-		_embedding = C.HPDF_TRUE
+		cEmbedding = C.HPDF_TRUE
 	} else {
-		_embedding = C.HPDF_FALSE
+		cEmbedding = C.HPDF_FALSE
 	}
-	rc := C.HPDF_LoadTTFontFromFile(pdf.ptr, _file_name, _embedding)
+	rc := C.HPDF_LoadTTFontFromFile(pdf.ptr, cFileName, cEmbedding)
 	return C.GoString(rc)
 }
 
-func (pdf *Doc) LoadTTFontFromFile2(file_name string, index uint, embedding bool) string {
+//LoadTTFontFromFile2 loads a TrueType font from an TrueType collection file and register it to a document object. (See "Fonts and Encodings")
+func (pdf *Doc) LoadTTFontFromFile2(filename string, index uint, embedding bool) string {
 
-	_file_name := C.CString(file_name)
-	defer C.free(unsafe.Pointer(_file_name))
+	cFileName := C.CString(filename)
+	defer C.free(unsafe.Pointer(cFileName))
 
-	var _embedding C.int
+	var cEmbedding C.int
 	if embedding {
-		_embedding = C.HPDF_TRUE
+		cEmbedding = C.HPDF_TRUE
 	} else {
-		_embedding = C.HPDF_FALSE
+		cEmbedding = C.HPDF_FALSE
 	}
 
-	rc := C.HPDF_LoadTTFontFromFile2(pdf.ptr, _file_name, C.uint(index), _embedding)
+	rc := C.HPDF_LoadTTFontFromFile2(pdf.ptr, cFileName, C.uint(index), cEmbedding)
 
 	return C.GoString(rc)
 }
 
+//UseJPFonts enables Japanese fonts. After HPDFUseJPFonts() is invoked, an application can use the following Japanese fonts.
 func (pdf *Doc) UseJPFonts() {
 
 	C.HPDF_UseJPFonts(pdf.ptr)
 }
 
+//UseKRFonts enables Korean fonts. After HPDFUseKRFonts() is invoked, an application can use the following Korean fonts.
 func (pdf *Doc) UseKRFonts() {
 
 	C.HPDF_UseKRFonts(pdf.ptr)
 }
 
+//UseCNSFonts enables simplified Chinese fonts. After HPDFUseCNSFonts() is invoked, an application can use the following simplified Chinese fonts.
 func (pdf *Doc) UseCNSFonts() {
 
 	C.HPDF_UseCNSFonts(pdf.ptr)
 }
 
+//UseCNTFonts enables traditional Chinese fonts. After HPDFUseCNTFonts() is invoked, an application can use the following traditional Chinese fonts.
 func (pdf *Doc) UseCNTFonts() {
 	C.HPDF_UseCNTFonts(pdf.ptr)
 }
 
+//GetFontName gets the name of the font.
 func (font *Font) GetFontName() string {
 
 	rc := C.HPDF_Font_GetFontName(font.ptr)
@@ -97,6 +106,7 @@ func (font *Font) GetFontName() string {
 
 }
 
+//GetEncodingName gets the encoding name of the font.
 func (font *Font) GetEncodingName() string {
 
 	rc := C.HPDF_Font_GetEncodingName(font.ptr)
@@ -105,6 +115,7 @@ func (font *Font) GetEncodingName() string {
 
 }
 
+//GetUnicodeWidth gets the width of a Unicode character in a specific font.
 func (font *Font) GetUnicodeWidth(code uint16) int {
 
 	rc := C.HPDF_Font_GetUnicodeWidth(font.ptr, C.ushort(code))
@@ -112,6 +123,7 @@ func (font *Font) GetUnicodeWidth(code uint16) int {
 
 }
 
+//GetBBox gets the bounding box of the font.
 func (font *Font) GetBBox() Rect {
 
 	rc := C.HPDF_Font_GetBBox(font.ptr)
@@ -120,6 +132,7 @@ func (font *Font) GetBBox() Rect {
 
 }
 
+//GetAscent gets the vertical ascent of the font.
 func (font *Font) GetAscent() int {
 
 	rc := C.HPDF_Font_GetAscent(font.ptr)
@@ -128,6 +141,7 @@ func (font *Font) GetAscent() int {
 
 }
 
+//GetDescent gets the vertical descent of the font.
 func (font *Font) GetDescent() int {
 
 	rc := C.HPDF_Font_GetDescent(font.ptr)
@@ -136,6 +150,7 @@ func (font *Font) GetDescent() int {
 
 }
 
+//GetXHeight gets the distance from the baseline of lowercase letters.
 func (font *Font) GetXHeight() uint {
 
 	rc := C.HPDF_Font_GetXHeight(font.ptr)
@@ -144,6 +159,7 @@ func (font *Font) GetXHeight() uint {
 
 }
 
+//GetCapHeight gets the distance from the baseline of uppercase letters.
 func (font *Font) GetCapHeight() uint {
 
 	rc := C.HPDF_Font_GetCapHeight(font.ptr)
@@ -152,18 +168,21 @@ func (font *Font) GetCapHeight() uint {
 
 }
 
+//TextWidth gets total width of the text, number of characters, and number of words.
 func (font *Font) TextWidth(text string, len uint) TextWidth {
-	_text := (*C.uchar)(unsafe.Pointer(C.CString(text)))
-	defer C.free(unsafe.Pointer(_text))
-	rc := C.HPDF_Font_TextWidth(font.ptr, _text, C.uint(len))
+	cText := (*C.uchar)(unsafe.Pointer(C.CString(text)))
+	defer C.free(unsafe.Pointer(cText))
+	rc := C.HPDF_Font_TextWidth(font.ptr, cText, C.uint(len))
 	return TextWidth{NumberOfCharacters: uint(rc.numchars), NumberOfWords: uint(rc.numwords), Width: uint(rc.width), NumSpace: uint(rc.numspace)}
 }
 
+//TextWidthEncoded gets total width of the text, number of characters, and number of words.
 func (font *Font) TextWidthEncoded(text []byte, len uint) TextWidth {
-	_text := (*C.uchar)(unsafe.Pointer(&text[0]))
-	return font.textWidthEncoded(_text, len)
+	cText := (*C.uchar)(unsafe.Pointer(&text[0]))
+	return font.textWidthEncoded(cText, len)
 }
 
+//TextWidthEncoded1 gets total width of the text, number of characters, and number of words.
 func (font *Font) TextWidthEncoded1(text string, encoding string) (TextWidth, error) {
 	v, l, e := CEncodedString(text, encoding)
 	if e != nil {
@@ -173,54 +192,59 @@ func (font *Font) TextWidthEncoded1(text string, encoding string) (TextWidth, er
 	return font.textWidthEncoded((*C.uchar)(unsafe.Pointer(v)), uint(l)), nil
 }
 
-func (font *Font) textWidthEncoded(_text *C.uchar, len uint) TextWidth {
-	rc := C.HPDF_Font_TextWidth(font.ptr, _text, C.uint(len))
+//TBD: textWidthEncoded
+func (font *Font) textWidthEncoded(cText *C.uchar, len uint) TextWidth {
+	rc := C.HPDF_Font_TextWidth(font.ptr, cText, C.uint(len))
 	return TextWidth{NumberOfCharacters: uint(rc.numchars), NumberOfWords: uint(rc.numwords), Width: uint(rc.width), NumSpace: uint(rc.numspace)}
 }
 
-func (font *Font) MeasureText(text string, len uint, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32) {
-	var _wordwrap C.int
+//MeasureText calculates the byte length which can be included within the specified width.
+func (font *Font) MeasureText(text string, len uint, width float32, fontsize float32, charspace float32, wordspace float32, wordwrap bool) (uint, float32) {
+	var cWordWrap C.int
 
-	_text := (*C.uchar)(unsafe.Pointer(C.CString(text)))
-	defer C.free(unsafe.Pointer(_text))
+	cText := (*C.uchar)(unsafe.Pointer(C.CString(text)))
+	defer C.free(unsafe.Pointer(cText))
 
 	if wordwrap {
-		_wordwrap = C.HPDF_TRUE
+		cWordWrap = C.HPDF_TRUE
 	} else {
-		_wordwrap = C.HPDF_FALSE
+		cWordWrap = C.HPDF_FALSE
 	}
 
 	var realwidth C.float
-	rc := C.HPDF_Font_MeasureText(font.ptr, _text, C.uint(len), C.float(width), C.float(font_size), C.float(char_space), C.float(word_space), _wordwrap, &realwidth)
+	rc := C.HPDF_Font_MeasureText(font.ptr, cText, C.uint(len), C.float(width), C.float(fontsize), C.float(charspace), C.float(wordspace), cWordWrap, &realwidth)
 
 	return uint(rc), float32(realwidth)
 }
 
-func (font *Font) MeasureTextEncoded(text []byte, len uint, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32) {
-	_text := (*C.uchar)(unsafe.Pointer(&text[0]))
-	return font.measureTextEncoded(_text, len, width, font_size, char_space, word_space, wordwrap)
+//MeasureTextEncoded calculates the byte length which can be included within the specified width.
+func (font *Font) MeasureTextEncoded(text []byte, len uint, width float32, fontsize float32, charspace float32, wordspace float32, wordwrap bool) (uint, float32) {
+	cText := (*C.uchar)(unsafe.Pointer(&text[0]))
+	return font.measureTextEncoded(cText, len, width, fontsize, charspace, wordspace, wordwrap)
 }
 
-func (font *Font) MeasureTextEncoded1(text string, encoding string, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32, error) {
+//MeasureTextEncoded1 calculates the byte length which can be included within the specified width.
+func (font *Font) MeasureTextEncoded1(text string, encoding string, width float32, fontsize float32, charspace float32, wordspace float32, wordwrap bool) (uint, float32, error) {
 	v, l, e := CEncodedString(text, encoding)
 	if e != nil {
 		return 0, 0, e
 	}
 	defer C.free(unsafe.Pointer(v))
-	a, b := font.measureTextEncoded((*C.uchar)(unsafe.Pointer(v)), uint(l), width, font_size, char_space, word_space, wordwrap)
+	a, b := font.measureTextEncoded((*C.uchar)(unsafe.Pointer(v)), uint(l), width, fontsize, charspace, wordspace, wordwrap)
 	return a, b, nil
 }
 
-func (font *Font) measureTextEncoded(_text *C.uchar, len uint, width float32, font_size float32, char_space float32, word_space float32, wordwrap bool) (uint, float32) {
-	var _wordwrap C.int
+//TBD: measureTextEncoded
+func (font *Font) measureTextEncoded(cText *C.uchar, len uint, width float32, fontsize float32, charspace float32, wordspace float32, wordwrap bool) (uint, float32) {
+	var cWordWrap C.int
 	if wordwrap {
-		_wordwrap = C.HPDF_TRUE
+		cWordWrap = C.HPDF_TRUE
 	} else {
-		_wordwrap = C.HPDF_FALSE
+		cWordWrap = C.HPDF_FALSE
 	}
 
 	var realwidth C.float
-	rc := C.HPDF_Font_MeasureText(font.ptr, _text, C.uint(len), C.float(width), C.float(font_size), C.float(char_space), C.float(word_space), _wordwrap, &realwidth)
+	rc := C.HPDF_Font_MeasureText(font.ptr, cText, C.uint(len), C.float(width), C.float(fontsize), C.float(charspace), C.float(wordspace), cWordWrap, &realwidth)
 
 	return uint(rc), float32(realwidth)
 }

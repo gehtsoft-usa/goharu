@@ -5,11 +5,12 @@ package goharu
 import "C"
 import "unsafe"
 
-//The structure represents an image
+//Outline struct keeps outline 
 type Outline struct {
 	ptr C.HPDF_Outline
 }
 
+//CreateOutline creates a new outline object.
 func (pdf *Doc) CreateOutline(parent Outline, title string, encoder Encoder) Outline {
 	_title := C.CString(title)
 	defer C.free(unsafe.Pointer(_title))
@@ -17,6 +18,7 @@ func (pdf *Doc) CreateOutline(parent Outline, title string, encoder Encoder) Out
 	return Outline{ptr: rc}
 }
 
+//SetOpened sets flag indicating whether the outline is opened
 func (outline *Outline) SetOpened(opened bool) {
 	var _opened C.int
 	if opened {
@@ -28,6 +30,7 @@ func (outline *Outline) SetOpened(opened bool) {
 	C.HPDF_Outline_SetOpened(outline.ptr, _opened)
 }
 
+//SetDestination sets outline destination
 func (outline *Outline) SetDestination(dst Destination) {
 
 	C.HPDF_Outline_SetDestination(outline.ptr, dst.ptr)

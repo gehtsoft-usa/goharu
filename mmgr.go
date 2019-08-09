@@ -4,11 +4,12 @@ package goharu
 //#include <hpdf.h>
 import "C"
 
-//The structure represents an image
+//MMgr struct contains the reference to media manager
 type MMgr struct {
 	ptr C.HPDF_MMgr
 }
 
+//GetPageMMgr returns media manager object
 func (page *Page) GetPageMMgr() MMgr {
 	rc := C.HPDF_GetPageMMgr(page.ptr)
 	return MMgr{ptr: rc}
