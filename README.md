@@ -23,11 +23,15 @@ https://github.com/libharu/libharu (for original libharu)
 
 2)  We also ported demos and provided function descriptions for godoc 
 
-# How to Build? 
+# How to Build the library?  
 
-In order to succesfully use the library make sure that:
+1) In order to succesfully use the library make sure that:
 
-On Linux: GCC is installed 
+- On Linux: GCC is installed 
 
-On Windows: MinGW is installed (https://mingw.org, https://sourceforge.net/projects/mingw-w64/) and ?:\mingw\mingw64\bin\ is available in 
+- On Windows: MinGW is installed (https://mingw.org, https://sourceforge.net/projects/mingw-w64/) and MinGW's bin folder is available in 
 PATH
+
+2) Get package using 
+
+go get github.com/gehtsoft-usa/goharu
