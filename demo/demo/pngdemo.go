@@ -35,15 +35,15 @@ func Pngdemo() {
 	pngDrawImage(pdf, "pngsuite/basn0g04.png", 300, page.GetHeight()-150, "4bit grayscale.")
 	pngDrawImage(pdf, "pngsuite/basn0g08.png", 400, page.GetHeight()-150, "8bit grayscale.")
 	pngDrawImage(pdf, "pngsuite/basn2c08.png", 100, page.GetHeight()-250, "8bit color.")
-	//pngDrawImage(pdf, "pngsuite/basn2c16.png", 200, page.GetHeight()-250, "16bit color.")
+	pngDrawImage(pdf, "pngsuite/basn2c16.png", 200, page.GetHeight()-250, "16bit color.")
 	pngDrawImage(pdf, "pngsuite/basn3p01.png", 100, page.GetHeight()-350, "1bit palette.")
 	pngDrawImage(pdf, "pngsuite/basn3p02.png", 200, page.GetHeight()-350, "2bit palette.")
 	pngDrawImage(pdf, "pngsuite/basn3p04.png", 300, page.GetHeight()-350, "4bit palette.")
 	pngDrawImage(pdf, "pngsuite/basn3p08.png", 400, page.GetHeight()-350, "8bit palette.")
 	pngDrawImage(pdf, "pngsuite/basn4a08.png", 100, page.GetHeight()-450, "8bit alpha.")
-	//pngDrawImage(pdf, "pngsuite/basn4a16.png", 200, page.GetHeight()-450, "16bit alpha.")
+	pngDrawImage(pdf, "pngsuite/basn4a16.png", 200, page.GetHeight()-450, "16bit alpha.")
 	pngDrawImage(pdf, "pngsuite/basn6a08.png", 100, page.GetHeight()-550, "8bit alpha.")
-	//pngDrawImage(pdf, "pngsuite/basn6a16.png", 200, page.GetHeight()-550, "16bit alpha.")
+	pngDrawImage(pdf, "pngsuite/basn6a16.png", 200, page.GetHeight()-550, "16bit alpha.")
 
 	pdf.Save("out/pngdemo.pdf")
 }
