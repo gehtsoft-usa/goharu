@@ -1,7 +1,7 @@
 package goharu
 
 //#cgo CFLAGS: -I${SRCDIR}/libharu/include
-//#cgo LDFLAGS: -liconv
+//#cgo windows LDFLAGS: -liconv
 //#include <hpdf.h>
 //#include <string.h>
 //#include <iconv.h>

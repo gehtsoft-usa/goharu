@@ -5,9 +5,9 @@ package goharu
 //#cgo windows,386 LDFLAGS: -L${SRCDIR}/libharu/windows/x86
 //#cgo windows,amd64 LDFLAGS: -L${SRCDIR}/libharu/windows/x64
 //#cgo darwin,amd64 LDFLAGS: -L${SRCDIR}/libharu/macos/x64
-//#cgo linux,!android,amd64 LDFLAGS: -L${SRCDIR}/libharu/linux/x64
-//#cgo linux,!android,arm32 LDFLAGS: -L${SRCDIR}/libharu/linux/arm32
-//#cgo linux,!android,arm64 LDFLAGS: -L${SRCDIR}/libharu/linux/arm64
+//#cgo linux,!android,amd64 LDFLAGS: -L${SRCDIR}/libharu/linux/x64 -lm
+//#cgo linux,!android,arm32 LDFLAGS: -L${SRCDIR}/libharu/linux/arm32 -lm
+//#cgo linux,!android,arm64 LDFLAGS: -L${SRCDIR}/libharu/linux/arm64 -lm
 //#include <hpdf.h>
 //#include <hpdf_u3d.h>
 //extern void go_haru_error_callback(int error_no, int detail_no, int user_data);
