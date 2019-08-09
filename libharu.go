@@ -4,7 +4,7 @@ package goharu
 //#cgo LDFLAGS: -lharu23
 //#cgo windows,386 LDFLAGS: -L${SRCDIR}/libharu/windows/x86
 //#cgo windows,amd64 LDFLAGS: -L${SRCDIR}/libharu/windows/x64
-//#cgo darwin,amd64 LDFLAGS: -L${SRCDIR}/libharu/macos/x64
+//#cgo darwin,amd64 LDFLAGS: -L${SRCDIR}/libharu/macos/x64 -liconv
 //#cgo linux,!android,amd64 LDFLAGS: -L${SRCDIR}/libharu/linux/x64 -lm
 //#cgo linux,!android,arm32 LDFLAGS: -L${SRCDIR}/libharu/linux/arm32 -lm
 //#cgo linux,!android,arm64 LDFLAGS: -L${SRCDIR}/libharu/linux/arm64 -lm
