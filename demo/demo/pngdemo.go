@@ -29,7 +29,6 @@ func Pngdemo() {
 
 	page.SetFontAndSize(font, 8)
 
-	//uncomment 16bit color as soon as fixed static libraries are available
 	pngDrawImage(pdf, "pngsuite/basn0g01.png", 100, page.GetHeight()-150, "1bit grayscale.")
 	pngDrawImage(pdf, "pngsuite/basn0g02.png", 200, page.GetHeight()-150, "2bit grayscale.")
 	pngDrawImage(pdf, "pngsuite/basn0g04.png", 300, page.GetHeight()-150, "4bit grayscale.")
