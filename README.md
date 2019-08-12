@@ -23,6 +23,8 @@ https://github.com/libharu/libharu (for original libharu)
 
 2)  We also ported demos and provided function descriptions for godoc 
 
+The binaries are tested on Windows 7, Windows 10, Cent OS 7, Ubuntu 18.04, OSX 10.14
+
 # How to Build the library?  
 
 1) In order to succesfully use the library make sure that:
@@ -34,4 +36,14 @@ PATH
 
 2) Get package using 
 
-go get github.com/gehtsoft-usa/goharu
+`go get github.com/gehtsoft-usa/goharu`
+
+3) To run demo go to demo subfolder of the folder where the package is installed and run
+
+`go run demo.go help`
+
+to get the list of demos, then run samples, e.g. 
+
+`go run demo.go png fonts`
+
+PDF files are created in out subfolder of demo
