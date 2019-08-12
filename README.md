@@ -13,6 +13,8 @@ So, we included the  cross-platform static libraries, made from the same sources
 
 These binaries also contains all recent fixes we made in haru, that may be yet to be incorporated into original libharu code. 
 
+The binaries are tested on Windows 7, Windows 10, Cent OS 7, Ubuntu 18.04, OSX 10.14.
+
 If you still want to accept the challenge of building haru, please feel free to take source code and building procedures here
 
 https://github.com/gehtsoft-usa/libharu (for our fixed version)
@@ -23,7 +25,7 @@ https://github.com/libharu/libharu (for original libharu)
 
 2)  We also ported demos and provided function descriptions for godoc 
 
-The binaries are tested on Windows 7, Windows 10, Cent OS 7, Ubuntu 18.04, OSX 10.14
+
 
 # How to Build the library?  
 
