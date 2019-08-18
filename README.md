@@ -25,7 +25,17 @@ https://github.com/libharu/libharu (for original libharu)
 
 2)  We also ported demos and provided function descriptions for godoc 
 
+Use https://github.com/gehtsoft-usa/goharu to see types and functions documentation. 
 
+3) To run demo go to demo subfolder of the folder where the package is installed and run
+
+`go run demo.go help`
+
+to get the list of demos, then run samples, e.g. 
+
+`go run demo.go png fonts`
+
+PDF files are created in out subfolder of demo
 
 # How to Build the library?  
 
@@ -39,13 +49,3 @@ PATH
 2) Get package using 
 
 `go get github.com/gehtsoft-usa/goharu`
-
-3) To run demo go to demo subfolder of the folder where the package is installed and run
-
-`go run demo.go help`
-
-to get the list of demos, then run samples, e.g. 
-
-`go run demo.go png fonts`
-
-PDF files are created in out subfolder of demo
