@@ -25,7 +25,7 @@ https://github.com/libharu/libharu (for original libharu)
 
 2)  We also ported demos and provided function descriptions for godoc 
 
-Use https://github.com/gehtsoft-usa/goharu to see types and functions documentation. 
+Use https://godoc.org/github.com/gehtsoft-usa/goharu to see types and functions documentation. 
 
 3) To run demo go to demo subfolder of the folder where the package is installed and run
 
