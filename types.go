@@ -17,9 +17,13 @@ func (color *RGBColor) toHaru() C.HPDF_RGBColor {
 	return C.HPDF_RGBColor{r: C.float(color.R), g: C.float(color.G), b: C.float(color.B)}
 }
 
-func (native *C.HPDF_RGBColor) toGo() RGBColor {
-	return RGBColor{R: float32(native.r), G: float32(native.g), B: float32(native.b)}
+func RGBColorFromNative(color C.HPDF_RGBColor) RGBColor {
+	return RGBColor{R: float32(color.r), G: float32(color.g), B: float32(color.b)}
 }
+
+//func (native *C.HPDF_RGBColor) toGo() RGBColor {
+//	return RGBColor{R: float32(native.r), G: float32(native.g), B: float32(native.b)}
+//}
 
 //func (native *_Ctype_struct__HPDF_RGBColor) toGo() RGBColor {
 //	return RGBColor{R: float32(native.r), G: float32(native.g), B: float32(native.b)}
@@ -37,9 +41,13 @@ func (color *CMYKColor) toHaru() C.HPDF_CMYKColor {
 	return C.HPDF_CMYKColor{c: C.float(color.C), m: C.float(color.M), y: C.float(color.Y), k: C.float(color.K)}
 }
 
-func (native *C.HPDF_CMYKColor) toGo() CMYKColor {
-	return CMYKColor{C: float32(native.c), M: float32(native.m), Y: float32(native.y), K: float32(native.k)}
+func CMYKColorFromNative(color C.HPDF_CMYKColor) CMYKColor {
+	return CMYKColor{C: float32(color.c), M: float32(color.m), Y: float32(color.y), K: float32(color.k)}
 }
+
+//func (native *C.HPDF_CMYKColor) toGo() CMYKColor {
+//	return CMYKColor{C: float32(native.c), M: float32(native.m), Y: float32(native.y), K: float32(native.k)}
+//}
 
 //func (native *_Ctype_struct__HPDF_CMYKColor) toGo() CMYKColor {
 //	return CMYKColor{C: float32(native.c), M: float32(native.m), Y: float32(native.y), K: float32(native.k)}
@@ -98,7 +106,7 @@ type TransMatrix struct {
 	A, B, C, D, X, Y float32
 }
 
-func (native *C.HPDF_TransMatrix) toGo() TransMatrix {
+func TransMatrixFromNative(native C.HPDF_TransMatrix) TransMatrix {
 	return TransMatrix{A: float32(native.a), B: float32(native.b), C: float32(native.c), D: float32(native.d), X: float32(native.x), Y: float32(native.y)}
 }
 
@@ -128,7 +136,7 @@ func (src *DashMode) toHaru() C.HPDF_DashMode {
 	return r
 }
 
-func (native *C.HPDF_DashMode) toGo() DashMode {
+func DashModeFromNative(native C.HPDF_DashMode) DashMode {
 	r := DashMode{NumPatterns: uint(native.num_ptn), Phase: uint(native.phase)}
 	var i uint
 	for i = 0; i < r.NumPatterns; i++ {

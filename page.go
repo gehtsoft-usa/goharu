@@ -55,15 +55,19 @@ func (page *Page) SetZoom(zoom float32) {
 }
 
 //PageNumStyleDecimal is page numeration style
-const PageNumStyleDecimal int = 0 
+const PageNumStyleDecimal int = 0
+
 //PageNumStyleUpperRoman is page numeration style
-const PageNumStyleUpperRoman int = 1 
+const PageNumStyleUpperRoman int = 1
+
 //PageNumStyleLowerRoman is page numeration style
-const PageNumStyleLowerRoman int = 2 
+const PageNumStyleLowerRoman int = 2
+
 //PageNumStyleUpperLetters is page numeration style
-const PageNumStyleUpperLetters int = 3 
+const PageNumStyleUpperLetters int = 3
+
 //PageNumStyleLowerLetters is page numeration style
-const PageNumStyleLowerLetters int = 4 
+const PageNumStyleLowerLetters int = 4
 
 //AddPageLabel adds a page labeling range for the document.
 //
@@ -75,17 +79,22 @@ func (pdf *Doc) AddPageLabel(pageNum uint, style int, firstPage uint, prefix str
 }
 
 //PageLayoutSingle is page layout style
-const PageLayoutSingle int = 0 
+const PageLayoutSingle int = 0
+
 //PageLayoutOneColumn is page layout style
-const PageLayoutOneColumn int = 1 
+const PageLayoutOneColumn int = 1
+
 //PageLayoutTwoColumnLeft is page layout style
-const PageLayoutTwoColumnLeft int = 2 
+const PageLayoutTwoColumnLeft int = 2
+
 //PageLayoutTwoColumnRight is page layout style
-const PageLayoutTwoColumnRight int = 3 
+const PageLayoutTwoColumnRight int = 3
+
 //PageLayoutTwoPageLeft is page layout style
-const PageLayoutTwoPageLeft int = 4 
+const PageLayoutTwoPageLeft int = 4
+
 //PageLayoutTwoPageRight is page layout style
-const PageLayoutTwoPageRight int = 5 
+const PageLayoutTwoPageRight int = 5
 
 //GetPageLayout returns the handle of current page object.
 //
@@ -103,13 +112,16 @@ func (pdf *Doc) SetPageLayout(layout int) {
 }
 
 //PageModeUseNone is page use mode
-const PageModeUseNone int = 0 
+const PageModeUseNone int = 0
+
 //PageModeUseOutline is page use mode
-const PageModeUseOutline int = 1 
+const PageModeUseOutline int = 1
+
 //PageModeUseThumbs is page use mode
-const PageModeUseThumbs int = 2 
+const PageModeUseThumbs int = 2
+
 //PageModeFullScreen is page use mode
-const PageModeFullScreen int = 3 
+const PageModeFullScreen int = 3
 
 //GetPageMode returns page mode
 //
@@ -189,7 +201,7 @@ func (page *Page) GetCurrentFontSize() float32 {
 //GetTransMatrix gets the current transformation matrix of the page.
 func (page *Page) GetTransMatrix() TransMatrix {
 	rc := C.HPDF_Page_GetTransMatrix(page.ptr)
-	return rc.toGo()
+	return TransMatrixFromNative(rc)
 }
 
 //GetLineWidth gets the current line width of the page.
@@ -198,17 +210,22 @@ func (page *Page) GetLineWidth() float32 {
 }
 
 //ButtEnd is line end style
-const ButtEnd int = 0 
+const ButtEnd int = 0
+
 //RoundEnd is line end style
-const RoundEnd int = 1 
+const RoundEnd int = 1
+
 //ProjectingSquareEnd is line end style
-const ProjectingSquareEnd int = 2 
+const ProjectingSquareEnd int = 2
+
 //MiterJoin is line join style
-const MiterJoin int = 0 
+const MiterJoin int = 0
+
 //RoundJoin is line join style
-const RoundJoin int = 1 
+const RoundJoin int = 1
+
 //BevelJoin is line join style
-const BevelJoin int = 2 
+const BevelJoin int = 2
 
 //GetLineCap gets the current line cap style of the page.
 //
@@ -232,7 +249,7 @@ func (page *Page) GetMiterLimit() float32 {
 //GetDash gets the current pattern of the page.
 func (page *Page) GetDash() DashMode {
 	rc := C.HPDF_Page_GetDash(page.ptr)
-	return rc.toGo()
+	return DashModeFromNative(rc)
 }
 
 //GetFlat gets the current value of the page's flatness.
@@ -261,21 +278,28 @@ func (page *Page) GetTextLeading() float32 {
 }
 
 //TextRenderFill is text rendering mode
-const TextRenderFill int = 0 
+const TextRenderFill int = 0
+
 //TextRenderStroke is text rendering mode
-const TextRenderStroke int = 1 
+const TextRenderStroke int = 1
+
 //TextRenderFillThenStroke is text rendering mode
-const TextRenderFillThenStroke int = 2 
+const TextRenderFillThenStroke int = 2
+
 //TextRenderInvisible is text rendering mode
-const TextRenderInvisible int = 3 
+const TextRenderInvisible int = 3
+
 //TextRenderFillClipping is text rendering mode
-const TextRenderFillClipping int = 4 
+const TextRenderFillClipping int = 4
+
 //TextRenderStrokeClipping is text rendering mode
-const TextRenderStrokeClipping int = 5 
+const TextRenderStrokeClipping int = 5
+
 //TextRenderFillStrokeClipping is text rendering mode
-const TextRenderFillStrokeClipping int = 6 
+const TextRenderFillStrokeClipping int = 6
+
 //TextRenderClipping is text rendering mode
-const TextRenderClipping int = 7 
+const TextRenderClipping int = 7
 
 //GetTextRenderingMode returns the current value of the page's text rendering mode.
 //
@@ -297,25 +321,25 @@ func (page *Page) GetTextRise() float32 {
 //GetRGBFill returns the current value of the page's filling color. HPDF_Page_GetRGBFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_RGB.
 func (page *Page) GetRGBFill() RGBColor {
 	rc := C.HPDF_Page_GetRGBFill(page.ptr)
-	return rc.toGo()
+	return RGBColorFromNative(rc)
 }
 
 //GetRGBStroke returns the current value of the page's stroking color. HPDF_Page_GetRGBStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_RGB.
 func (page *Page) GetRGBStroke() RGBColor {
 	rc := C.HPDF_Page_GetRGBStroke(page.ptr)
-	return rc.toGo()
+	return RGBColorFromNative(rc)
 }
 
 //GetCMYKFill returns the current value of the page's filling color. HPDF_Page_GetCMYKFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_CMYK.
 func (page *Page) GetCMYKFill() CMYKColor {
 	rc := C.HPDF_Page_GetCMYKFill(page.ptr)
-	return rc.toGo()
+	return CMYKColorFromNative(rc)
 }
 
 //GetCMYKStroke returns the current value of the page's stroking color. HPDF_Get_CMYKStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_CMYK.
 func (page *Page) GetCMYKStroke() CMYKColor {
 	rc := C.HPDF_Page_GetCMYKStroke(page.ptr)
-	return rc.toGo()
+	return CMYKColorFromNative(rc)
 
 }
 
@@ -330,27 +354,37 @@ func (page *Page) GetGrayStroke() float32 {
 }
 
 //ColorSpaceDeviceGray is color space identifier
-const ColorSpaceDeviceGray int = 0 
+const ColorSpaceDeviceGray int = 0
+
 //ColorSpaceDeviceRgb is color space identifier
-const ColorSpaceDeviceRgb int = 1 
+const ColorSpaceDeviceRgb int = 1
+
 //ColorSpaceDeviceCmyk is color space identifier
-const ColorSpaceDeviceCmyk int = 2 
+const ColorSpaceDeviceCmyk int = 2
+
 //ColorSpaceCalGray is color space identifier
-const ColorSpaceCalGray int = 3 
+const ColorSpaceCalGray int = 3
+
 //ColorSpaceCalRgb is color space identifier
-const ColorSpaceCalRgb int = 4 
+const ColorSpaceCalRgb int = 4
+
 //ColorSpaceLab is color space identifier
-const ColorSpaceLab int = 5 
+const ColorSpaceLab int = 5
+
 //ColorSpaceIccBased is color space identifier
-const ColorSpaceIccBased int = 6 
+const ColorSpaceIccBased int = 6
+
 //ColorSpaceSeparation is color space identifier
-const ColorSpaceSeparation int = 7 
+const ColorSpaceSeparation int = 7
+
 //ColorSpaceDeviceN is color space identifier
-const ColorSpaceDeviceN int = 8 
+const ColorSpaceDeviceN int = 8
+
 //ColorSpaceIndexed is color space identifier
-const ColorSpaceIndexed int = 9 
+const ColorSpaceIndexed int = 9
+
 //ColorSpacePattern is color space identifier
-const ColorSpacePattern int = 10 
+const ColorSpacePattern int = 10
 
 //GetStrokingColorSpace returns the current value of the page's stroking color space.
 //
@@ -369,7 +403,7 @@ func (page *Page) GetFillingColorSpace() int {
 //GetTextMatrix gets the current text transformation matrix of the page.
 func (page *Page) GetTextMatrix() TransMatrix {
 	rc := C.HPDF_Page_GetTextMatrix(page.ptr)
-	return rc.toGo()
+	return TransMatrixFromNative(rc)
 }
 
 //GetGStateDepth returns the number of the page's graphics state stack.
@@ -669,14 +703,17 @@ func (page *Page) TextOut(xpos float32, ypos float32, text string) {
 	C.HPDF_Page_TextOut(page.ptr, C.float(xpos), C.float(ypos), _text)
 }
 
-//TextAlignLeft is text alignment 
-const TextAlignLeft int = 0 
-//TextAlignRight is text alignment 
-const TextAlignRight int = 1 
-//TextAlignCenter is text alignment 
-const TextAlignCenter int = 2 
-//TextAlignJustify is text alignment 
-const TextAlignJustify int = 3 
+//TextAlignLeft is text alignment
+const TextAlignLeft int = 0
+
+//TextAlignRight is text alignment
+const TextAlignRight int = 1
+
+//TextAlignCenter is text alignment
+const TextAlignCenter int = 2
+
+//TextAlignJustify is text alignment
+const TextAlignJustify int = 3
 
 //TextRect draw text in the specified rectangle
 //
@@ -690,40 +727,56 @@ func (page *Page) TextRect(left float32, top float32, right float32, bottom floa
 	return uint32(len)
 }
 
-//TsWipeRight is slide show mode 
-const TsWipeRight int = 0 
-//TsWipeUp is slide show mode 
-const TsWipeUp int = 1 
-//TsWipeLeft is slide show mode 
-const TsWipeLeft int = 2 
-//TsWipeDown is slide show mode 
-const TsWipeDown int = 3 
-//TsBarnDoorsHorizontalOut is slide show mode 
-const TsBarnDoorsHorizontalOut int = 4 
-//TsBarnDoorsHorizontalIn is slide show mode 
-const TsBarnDoorsHorizontalIn int = 5 
-//TsBarnDoorsVerticalOut is slide show mode 
-const TsBarnDoorsVerticalOut int = 6 
-//TsBarnDoorsVerticalIn is slide show mode 
-const TsBarnDoorsVerticalIn int = 7 
-//TsBoxOut is slide show mode 
-const TsBoxOut int = 8 
-//TsBoxIn is slide show mode 
-const TsBoxIn int = 8 
-//TsBlindsHorizontal is slide show mode 
-const TsBlindsHorizontal int = 10 
-//TsBlindsVertical is slide show mode 
-const TsBlindsVertical int = 11 
-//TsDissolve is slide show mode 
-const TsDissolve int = 12 
-//TsGlitterRight is slide show mode 
-const TsGlitterRight int = 13 
-//TsGlitterDown is slide show mode 
-const TsGlitterDown int = 14 
-//TsGlitterTopLeftToBottomRight is slide show mode 
-const TsGlitterTopLeftToBottomRight int = 15 
-//TsReplace is slide show mode 
-const TsReplace int = 16 
+//TsWipeRight is slide show mode
+const TsWipeRight int = 0
+
+//TsWipeUp is slide show mode
+const TsWipeUp int = 1
+
+//TsWipeLeft is slide show mode
+const TsWipeLeft int = 2
+
+//TsWipeDown is slide show mode
+const TsWipeDown int = 3
+
+//TsBarnDoorsHorizontalOut is slide show mode
+const TsBarnDoorsHorizontalOut int = 4
+
+//TsBarnDoorsHorizontalIn is slide show mode
+const TsBarnDoorsHorizontalIn int = 5
+
+//TsBarnDoorsVerticalOut is slide show mode
+const TsBarnDoorsVerticalOut int = 6
+
+//TsBarnDoorsVerticalIn is slide show mode
+const TsBarnDoorsVerticalIn int = 7
+
+//TsBoxOut is slide show mode
+const TsBoxOut int = 8
+
+//TsBoxIn is slide show mode
+const TsBoxIn int = 8
+
+//TsBlindsHorizontal is slide show mode
+const TsBlindsHorizontal int = 10
+
+//TsBlindsVertical is slide show mode
+const TsBlindsVertical int = 11
+
+//TsDissolve is slide show mode
+const TsDissolve int = 12
+
+//TsGlitterRight is slide show mode
+const TsGlitterRight int = 13
+
+//TsGlitterDown is slide show mode
+const TsGlitterDown int = 14
+
+//TsGlitterTopLeftToBottomRight is slide show mode
+const TsGlitterTopLeftToBottomRight int = 15
+
+//TsReplace is slide show mode
+const TsReplace int = 16
 
 //SetSlideShow configures the setting for slide transition of the page.
 //
@@ -732,35 +785,47 @@ func (page *Page) SetSlideShow(slideShowType int, dispTime float32, transTime fl
 	C.HPDF_Page_SetSlideShow(page.ptr, C.HPDF_TransitionStyle(slideShowType), C.float(dispTime), C.float(transTime))
 }
 
-//PageSizeLetter is page size 
-const PageSizeLetter int = 0 
-//PageSizeLegal is page size 
-const PageSizeLegal int = 1 
-//PageSizeA3 is page size 
-const PageSizeA3 int = 2 
-//PageSizeA4 is page size 
-const PageSizeA4 int = 3 
-//PageSizeA5 is page size 
-const PageSizeA5 int = 4 
-//PageSizeB4 is page size 
-const PageSizeB4 int = 5 
-//PageSizeB5 is page size 
-const PageSizeB5 int = 6 
-//PageSizeExecutive is page size 
-const PageSizeExecutive int = 7 
-//PageSizeUs4x6 is page size 
-const PageSizeUs4x6 int = 8 
-//PageSizeUs4x8 is page size 
-const PageSizeUs4x8 int = 9 
-//PageSizeUs5x7 is page size 
-const PageSizeUs5x7 int = 10 
-//PageSizeComm10 is page size 
-const PageSizeComm10 int = 11 
+//PageSizeLetter is page size
+const PageSizeLetter int = 0
+
+//PageSizeLegal is page size
+const PageSizeLegal int = 1
+
+//PageSizeA3 is page size
+const PageSizeA3 int = 2
+
+//PageSizeA4 is page size
+const PageSizeA4 int = 3
+
+//PageSizeA5 is page size
+const PageSizeA5 int = 4
+
+//PageSizeB4 is page size
+const PageSizeB4 int = 5
+
+//PageSizeB5 is page size
+const PageSizeB5 int = 6
+
+//PageSizeExecutive is page size
+const PageSizeExecutive int = 7
+
+//PageSizeUs4x6 is page size
+const PageSizeUs4x6 int = 8
+
+//PageSizeUs4x8 is page size
+const PageSizeUs4x8 int = 9
+
+//PageSizeUs5x7 is page size
+const PageSizeUs5x7 int = 10
+
+//PageSizeComm10 is page size
+const PageSizeComm10 int = 11
 
 //PagePortrait is page orientation
-const PagePortrait int = 0 
+const PagePortrait int = 0
+
 //PageLandscape is orientation
-const PageLandscape int = 1 
+const PageLandscape int = 1
 
 //SetSize changes the size and direction of a page to a predefined size.
 //
@@ -867,7 +932,7 @@ func (page *Page) MeasureText2(text []byte, width float32, wordwrap bool) (uint,
 	} else {
 		_wordwrap = C.HPDF_FALSE
 	}
-	var _realWidth C.float 
+	var _realWidth C.float
 
 	rc := uint(C.HPDF_Page_MeasureText(page.ptr, v, C.float(width), _wordwrap, &_realWidth))
 	return rc, float32(_realWidth)
